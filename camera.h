@@ -19,4 +19,9 @@ typedef struct {
 } CAMERA;
 
 
+void calculaterelativeposition(SDL_Rect *dest);
+void initcamera();
+void cameratest();
+void handlecameramotion();
+
 #endif

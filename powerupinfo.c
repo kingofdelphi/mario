@@ -9,6 +9,7 @@ GROUNDGRASSES groundgrasslist;
 IMMOVABLEBRICKS immovablebricklist;
 PIPES pipelist;
 
+void slidequestionmark(QUESTIONMARK *questionmark);
 void initquestlist()
 {
     questionpowerlist.total=0;

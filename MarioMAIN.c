@@ -1,4 +1,9 @@
 #include<stdio.h>
+void initscreen();
+void loadresourcesfromlevel();
+void initcamera();
+void initializemario();
+void rungame();
 
 int main(int argc,char * argv[])
 {

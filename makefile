@@ -1,6 +1,6 @@
 CXX = gcc
-LDFLAGS = `pkg-config --libs SDL_image`
-CXXFLAGS = `pkg-config --cflags SDL_image`
+LDFLAGS = `pkg-config --libs SDL2_image`
+CXXFLAGS = `pkg-config --cflags SDL2_image`
 TARGET = game
 
 SRCS = MarioMAIN.c collision.c game.c marioinfo.c levelmap.c powerupinfo.c resourcesload.c screen.c render.c camera.c eventhandling.c hiddentreasures.c 

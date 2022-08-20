@@ -1,22 +1,25 @@
 #include "screeninfo.h"
 #include "sdldecl.h"
+#include "render.h"
 #include "tileinfo.h"
 #include "spritespluslevelexternals.h"
 
 SDL_Surface *screen;
 
+SDL_Window* window = NULL;
+
 void initscreen()
 {
     SDL_Init(SDL_INIT_EVERYTHING);
-    screen = SDL_SetVideoMode(SCREEN_WIDTH,SCREEN_HEIGHT,SCREEN_BITS,SDL_DOUBLEBUF);
-    SDL_WM_SetCaption("Mario",0);
+    window = SDL_CreateWindow( "Mario", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+    screen = SDL_GetWindowSurface(window);
 }
 
 void render()
 {
     SDL_FillRect(screen,&screen->clip_rect,0xFFFFFF);
     renderlevel();
-    SDL_Flip(screen);
+    SDL_UpdateWindowSurface(window);
 }
 
 void renderlevel()

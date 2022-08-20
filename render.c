@@ -1,8 +1,11 @@
 
 #include "render.h"
+#include "camera.h"
 #include "spritespluslevelexternals.h"
 #include "hiddentreasures.h"
 /* renders all question mark powerup according to its members */
+void cointhitanim(COINHIT *coinhit);
+
 void renderquestionmark()
 {
     for (int i=0;i<questionpowerlist.total;i++)

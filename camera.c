@@ -43,7 +43,7 @@ void cameratest()
                 switch (event.key.keysym.sym)
                 {
                 case SDLK_ESCAPE:
-                    return SDL_QUIT;
+                    break;
                 case SDLK_LEFT:
                     camera.direction.left=true;
                     break;
@@ -54,9 +54,6 @@ void cameratest()
                 default:
                     break;
                 }
-                char txt[255];
-                sprintf(txt,"{CAMERA} x=%d,y=%d",camera.rect.x,camera.rect.y);
-                SDL_WM_SetCaption(txt,0);
             }
             else if (event.type==SDL_KEYUP)
             {

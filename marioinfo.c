@@ -34,6 +34,13 @@ MARIO mario;
 int coinseaten;
 SDL_Surface *mariospritesheet;
 
+void displayslidinganimation();
+void handlemarioverticalmotion();
+void handlemariohorizontalmotion();
+void calculaterelativeposition(SDL_Rect *dest);
+bool checkcollisionwithgroundgrass(SDL_Rect **collidedobject,SDL_Rect *mariorect,int collisionchecktype);
+int checkcollision(SDL_Rect *a, SDL_Rect *b);
+
 void initializemario()
 {
     mario.animframe=0;
@@ -48,7 +55,7 @@ void initializemario()
     mario.position.w =mariorects[mario.imageindex].w;
     mario.position.h =mariorects[mario.imageindex].h;
     mario.standdirection=RIGHT;
-    mario.jumpstate=none;
+    mario.jumpstate=NONE;
     mario.running=false;
     mario.xspeed=mario.yspeed=0;
     mario.sliding=false;
@@ -57,7 +64,7 @@ void initializemario()
 void loadmariospritesheet()
 {
     mariospritesheet = IMG_Load("Sprites/Completed Super Mario Bros Super Rip/Characters/Super Mario.bmp");
-    SDL_SetColorKey(mariospritesheet,SDL_SRCCOLORKEY,0x004040);
+    SDL_SetColorKey(mariospritesheet,SDL_TRUE,0x004040);
 }
 
 void rendermario()
@@ -68,11 +75,11 @@ void rendermario()
     switch(mario.type)
     {
     case small:
-        if (mario.sliding && mario.jumpstate==none)
+        if (mario.sliding && mario.jumpstate==NONE)
         {
             SDL_UpperBlit(mariospritesheet,&mariorects[10-jumpframe],screen,&dstrect);
         }
-        else if (mario.jumpstate !=none)  /* if mario is jumping or falling */
+        else if (mario.jumpstate !=NONE)  /* if mario is jumping or falling */
         {
 
             SDL_UpperBlit(mariospritesheet,&mariorects[jumpframe],screen,&dstrect);
@@ -83,7 +90,7 @@ void rendermario()
     default:
         break;
     }
-    if (mario.sliding && mario.jumpstate==none) displayslidinganimation();
+    if (mario.sliding && mario.jumpstate==NONE) displayslidinganimation();
 }
 
 void forwardmariowalkframe()
@@ -119,8 +126,8 @@ void handlemariomotion()
         handlemariohorizontalmotion();
         handlemarioverticalmotion();
     }
-    if (mario.sliding) SDL_WM_SetCaption("sliding",0);
-    else SDL_WM_SetCaption("not sliding",0);
+    // if (mario.sliding) SDL_WM_SetCaption("sliding",0);
+    // else SDL_WM_SetCaption("not sliding",0);
 }
 
 bool checkcollisionwithmoveablebricks(SDL_Rect **collidedobject,SDL_Rect *mariorect,int collisionchecktype)
@@ -226,7 +233,7 @@ bool checkmariocollision(SDL_Rect **collidedobjectrect,SDL_Rect *mariorect,int c
 
 void setmariojumpstate()
 {
-    if (mario.jumpstate==none)
+    if (mario.jumpstate==NONE)
     {
         mario.yspeed=marioinitialyVel;
         mario.jumpstate =jumping;
@@ -257,7 +264,7 @@ void handlemariohorizontalmotion()
             mario.xspeed=0;
             mario.sliding=false;
         }
-        if (mario.xspeed!=0) mario.xspeed -= xDecay* (mario.xspeed/ abs(mario.xspeed));
+        if (mario.xspeed!=0) mario.xspeed -= xDecay* (mario.xspeed/ fabs(mario.xspeed));
     }
     if ((int)mario.xspeed !=0) /* if mario is in motion */
     {
@@ -291,10 +298,10 @@ void handlemariohorizontalmotion()
         }
 
     }
-    else if (mario.jumpstate==none)   /* mario was moved horizontally  and no collision between mario and any object, so  mario must be in air and it must fall by the effect of gravity*/
+    else if (mario.jumpstate==NONE)   /* mario was moved horizontally  and no collision between mario and any object, so  mario must be in air and it must fall by the effect of gravity*/
     {
         mario.jumpstate=falling;
-        SDL_WM_SetCaption("falling",0);
+        // SDL_WM_SetCaption("falling",0);
         mario.yspeed=0; /* just in case */
     }
 
@@ -333,7 +340,7 @@ void handlemarioverticalmotion()
         if (mario.jumpstate==falling) /*collided while falling, so collided object is below, and mario must stop falling */
         {
             mario.position.y = collidedobject->y - mariorect.h;
-            mario.jumpstate=none;
+            mario.jumpstate=NONE;
         }
         else if (mario.jumpstate==jumping) /*collided while jumping, so collided object is above, and mario must begin falling down*/
         {

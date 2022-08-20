@@ -3,6 +3,7 @@
 #include "camera.h"
 #include "marioinfo.h"
 SDL_Event event;
+
 int handleevent()
 {
 
@@ -61,5 +62,6 @@ int handleevent()
 
             }
     }
+    return 0;
 
 }

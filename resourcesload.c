@@ -34,12 +34,30 @@ SDL_Rect spriterects[MAX_IMAGES] =
     {591,152,16,16},{591,171,16,16}
 
 };
+
+void loadlevelspritesheet();
+void loadmariospritesheet();
+void initallpowerups();
+
+void initializepipepowerup(PIPE *pipepower,int x, int y,int type);
+void initializeimmovablebrickpowerup(IMMOVABLEBRICK *brickpower,int x, int y,int type);
+void initializegroundgrasspowerup(GROUNDGRASS *grasspower,int x, int y,int grasstype);
+void forwardframequestionmark(QUESTIONS *questionlist,int index);
+void forwardframegrass(GRASSES *grasslist,int index);
+void handlequestionmarks();
+void slidequestionmark(QUESTIONMARK *questionmark);
+void handlegrasses();
+void animatepowerups();
+void initializegrasspowerup(GRASS *grasspower,int x, int y,int grasstype);
+void initializequestionmarkpowerup(QUESTIONMARK *questionmarkpower,int x, int y);
+void initializebrickpowerup(BRICK *brickpower,int x, int y);
+
 /* loads all the sprites evaluating level map */
 void loadresourcesfromlevel()
 {
     loadlevelspritesheet();
     loadmariospritesheet();
-    SDL_SetColorKey(levelspritesheet,SDL_SRCCOLORKEY,0x004040);
+    SDL_SetColorKey(levelspritesheet,SDL_TRUE,0x004040);
     /*set count of all powerups to zero */
     initallpowerups();
     //if (levelspritesheet ==NULL) MessageBox(0,"couldnt load",0,0);
@@ -95,5 +113,5 @@ void loadlevelspritesheet()
 
         coinspritesheet = IMG_Load("Sprites/Completed Super Mario Bros Super Rip/Level Formations/Items and Coins.bmp");
 
-        SDL_SetColorKey(coinspritesheet,SDL_SRCCOLORKEY,0x004040);
+        SDL_SetColorKey(coinspritesheet,SDL_TRUE,0x004040);
 }

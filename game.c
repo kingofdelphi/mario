@@ -1,5 +1,10 @@
 #include "sdldecl.h"
 #include "powerups.h"
+#include "marioinfo.h"
+#include "camera.h"
+#include "screen.h"
+
+int handleevent();
 
 void rungame()
 {

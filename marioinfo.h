@@ -20,7 +20,7 @@ typedef struct {
     double xspeed,yspeed;
     bool running;
     bool sliding;
-    enum JumpState {noverticalmotion,jumping,falling} jumpstate;
+    enum JumpState {noverticalmotion,jumping,falling,NONE} jumpstate;
     SDL_Rect position;
 } MARIO;
 
@@ -31,4 +31,9 @@ bool checkcollisionwithquestionmarks(SDL_Rect **collidedobject,SDL_Rect *mariore
 bool checkcollisionwithmoveablebricks(SDL_Rect **collidedobject,SDL_Rect *mariorect,int collisionchecktype);
 bool checkcollisionwithimmoveablebricks(SDL_Rect **collidedobject,SDL_Rect *mariorect,int collisionchecktype);
 bool checkcollisionwithgroundgrass(SDL_Rect **collidedobject,SDL_Rect *mariorect,int collisionchecktype);
+
+void setmariojumpstate();
+void handlemariomotion();
+void animatepowerups();
+
 #endif

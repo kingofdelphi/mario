@@ -4,14 +4,16 @@
 #include "camera.h"
 #include "screen.h"
 
+#ifdef EMSCRIPTEN
+ #include <emscripten.h>
+#endif
 int handleevent();
-
-void rungame()
-{
-    while(1)
-    {
-
-        if (handleevent() == SDL_QUIT) break;
+int run = 1;
+void loop() {
+        if (handleevent() == SDL_QUIT) {
+            run = 0;
+            return;
+        }
         //logic
         handlemariomotion();
         handlecameramotion(); /* move camera relative to the position of mario */
@@ -20,5 +22,16 @@ void rungame()
         //rendering
         render(); /* to screen */
         SDL_Delay(10);
+}
+
+void rungame()
+{
+#ifdef EMSCRIPTEN
+    emscripten_set_main_loop(loop, 0, 1);
+#else
+    while (run)
+    {
+        loop();
     }
+#endif
 }

@@ -1,0 +1,26 @@
+CXX = emcc
+LDFLAGS = -sUSE_SDL=2 -s USE_SDL_IMAGE=2 -s USE_SDL_TTF=2 --preload-file Sprites -s SDL2_IMAGE_FORMATS='["bmp","png"]' --use-preload-plugins 
+CXXFLAGS = -sUSE_SDL=2 -s USE_SDL_IMAGE=2 -s USE_SDL_TTF=2
+TARGET = game.html
+
+SRCS = MarioMAIN.c collision.c game.c marioinfo.c levelmap.c powerupinfo.c resourcesload.c screen.c render.c camera.c eventhandling.c hiddentreasures.c 
+OBJS = $(SRCS:.c=.o)
+DEPS = $(SRCS:.c=.d)
+
+.PHONY: clean all
+
+all: $(TARGET)
+
+$(TARGET): $(OBJS)
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(OBJS) -o $(TARGET) 
+
+%.o : %.c
+	$(CXX) $(CXXFLAGS) -MMD -c $< -o $@
+
+
+clean:
+	rm -rf *.o game *.d
+
+-include $(DEPS)
+
+ 
